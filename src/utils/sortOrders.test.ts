@@ -1,18 +1,21 @@
 import {sortByItemCount} from './sortOrders';
 
 describe('sortByItemCount function', () => {
-	it('same items count', () => {
-		const order1 = {
-			items: ['item1', 'item2'],
+	test.each([
+		[[], [], 0],
+		[[], ['1'], -1],
+		[['1'], [], 1],
+		[['1'], ['2'], 0],
+		[['1', '2'], ['1'], 1],
+		[['1'], ['1', '2'], -1],
+	])('.sortByItemCount(%o, &o)', (first, second, expected) => {
+		const firstOrder = {
+			items: first,
 		};
-
-		const order2 = {
-			items: ['1', '2'],
+		const SecondOrder = {
+			items: second,
 		};
-
-		const result = sortByItemCount(order1, order2);
-
-		expect(result).toBe(0);
+		expect(sortByItemCount(firstOrder, SecondOrder)).toBe(expected);
 	});
 });
 
